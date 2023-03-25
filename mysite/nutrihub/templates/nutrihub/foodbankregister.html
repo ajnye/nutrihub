@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Bank Registration</title>
+</head>
+<body>
+    <form method="POST" >
+    {% csrf_token %}
+    {{form}}
+    <button type = "submit", name = "save", value = "POST">Register</button>
+    </form>
+</body>
+</html>
