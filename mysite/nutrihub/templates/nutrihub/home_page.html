@@ -12,25 +12,38 @@
     <title>Home Page</title>
 </head>
 <body>
-    <nav class="navbar navbar-togglable-md navbar-light bg-light">
-        <a class="navbar-brand" href="#home"><img src = "{% static 'nutrihub/logo.png' %}" class = "img-fluid" style ="width:40px;height: 40px;float:left;"><h2>Nutrihub</h2></a>
-            <ul class="navbar-nav p-1 pt-2">
-                <form action = "http://127.0.0.1:8000/nutrihub/home/#signin">
-                    <button class = "btn btn-secondary" type="submit">Sign In/Sign Up</button>
-                </form>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#home"><img src = "{% static 'nutrihub/logo.png' %}" class = "img-fluid" style ="width:40px;height: 40px;float:left;"><h3>Nutrihub</h3></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact Us</a>
+              </li>
             </ul>
-    </nav>
+            <form class="d-flex">
+              <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign In/Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </nav>
     <div class="header">
         <h1><br></br><center>Connecting Communities, Nourishing Lives</center></h1>
         <center><img src = "{% static 'nutrihub/coverimage.jpg' %}" class = "img-fluid" style = "width: 400px;height:400px;"></center>
         <p><center>We're so glad to see you. Please click the button below to sign up.</center></p>
         <center><button type= "button" class="btn btn-primary">Get Started</button></center>
     </div>
-    <div class="aboutus" id = "about">
+    <div class="about-us" id = "about">
         <h1><br></br><br></br><center>About Us</center></h1>
         <p><center>Nutrihub was founded on the hope that we could connect users to food banks for individual-based needs.</center></p>
     </div>
-    <div class="contactus" id = "contact">
+    <div class="contact-us" id = "contact">
         <h1><br></br><br></br><center>Contact Us</center></h1>
         <p><center>Any questions? Contact us at the email xxxxx@xxx.com.</center></p>
     </div>

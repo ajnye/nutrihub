@@ -16,4 +16,5 @@ import requests
 # Create your views here.
 
 def home_page(request):
-    return render(request, "nutrihub/home_page.html")
+    context = {'user': request.user, 'title': 'Home'}
+    return render(request, "nutrihub/home_page.html", context)
