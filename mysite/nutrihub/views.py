@@ -13,6 +13,11 @@ import time
 import requests
 from django.conf import settings
 from django.http import JsonResponse
+# from allauth.socialaccount import *
+import time
+import requests
+from django.contrib.auth.forms import UserCreationForm  
+from .forms import CustomUserCreationForm
 
 import geocoder
 
@@ -49,5 +54,22 @@ def map(request):
     }
     return render(request, 'nutrihub/map.html',context)
 
+# Create your views here.
+def signin(request):  
+    if request.POST == 'POST':  
+        form = CustomUserCreationForm()  
+        if form.is_valid():  
+            form.save()  
+    else:  
+        form = CustomUserCreationForm()  
+    context = {  
+        'form':form  
+    }  
+    return render(request, 'nutrihub/sign_in_up_page.html', context)  
+
 def home_page(request):
-    return render(request, "nutrihub/home_page.html")
+    context = {'user': request.user, 'title': 'Home'}
+    return render(request, "nutrihub/home_page.html", context)
+# def signin(request):
+#     context = {'user': request.user, 'title': 'Signin'}
+#     return render(request, "nutrihub/sign_in_up_page.html", context)
