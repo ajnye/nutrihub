@@ -12,10 +12,27 @@ from django.contrib.auth import *
 import time
 import requests
 from django.conf import settings
+
+import geocoder
+
+def get_locations():
+    key = settings.GOOGLE_API_KEY
+
+    g = geocoder.ip('me').latlng
+    url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={g[0]}%2C{g[1]}&radius=1500&keyword=food+bank&key={key}'
+    payload={}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    
+    return response
+
 def map(request):
     key = settings.GOOGLE_API_KEY
+
     context = {
         'key':key,
+
     }
     return render(request, 'nutrihub/map.html',context)
 
