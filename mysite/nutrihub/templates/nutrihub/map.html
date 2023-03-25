@@ -52,6 +52,7 @@
             const marker = new google.maps.Marker({
                 position: { lat: parseFloat(i.geometry.location.lat), lng: parseFloat(i.geometry.location.lng)},
                 map: map,
+                title: i.name + "\n" + i.vicinity
             })
         });
      }
