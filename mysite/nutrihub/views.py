@@ -12,8 +12,21 @@ from django.contrib.auth import *
 # from allauth.socialaccount import *
 import time
 import requests
+from django.contrib.auth.forms import UserCreationForm  
+from .forms import CustomUserCreationForm  
 
 # Create your views here.
+def signin(request):  
+    if request.POST == 'POST':  
+        form = CustomUserCreationForm()  
+        if form.is_valid():  
+            form.save()  
+    else:  
+        form = CustomUserCreationForm()  
+    context = {  
+        'form':form  
+    }  
+    return render(request, 'nutrihub/sign_in_up_page.html', context)  
 
 def home_page(request):
     context = {'user': request.user, 'title': 'Home'}

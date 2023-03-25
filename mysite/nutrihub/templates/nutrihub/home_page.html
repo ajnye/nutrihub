@@ -28,11 +28,11 @@
               </li>
             </ul>
             {% if user.is_authenticated %}
-            <form class="d-flex" action="https://127.0.0.1:8000/nutrihub/signout">
+            <form class="d-flex" action="127.0.0.1:8000/nutrihub/signout/">
                 <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign Out</button>
             </form>
             {% else %}
-            <form class="d-flex" action="https://127.0.0.1:8000/nutrihub/signin">
+            <form class="d-flex" action="../signin">
                 <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign In/Sign Up</button>
               </form>
             {% endif %}
