@@ -12,12 +12,18 @@ from django.contrib.auth import *
 import time
 import requests
 from django.conf import settings
+
 def map(request):
     key = settings.GOOGLE_API_KEY
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&keyword=foodbank&key=" + key
+
+    
     context = {
         'key':key,
     }
     return render(request, 'nutrihub/map.html',context)
+
+
 
 def home_page(request):
     return render(request, "nutrihub/home_page.html")
