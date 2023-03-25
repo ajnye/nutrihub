@@ -3,7 +3,8 @@ from . import views
 
 app_name = 'nutrihub'
 urlpatterns = [
-    path('home/', views.home_page, name='home')
+    path('home/', views.home_page, name='home'),
+    path('signin/', views.signin, name='signin')
     # path('tutor/', include('tutor.urls')),
     # path('student/', include('student.urls')),
     # path('course/', views.tutor_search_courses, name='search'),

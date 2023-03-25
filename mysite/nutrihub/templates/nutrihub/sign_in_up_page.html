@@ -1,22 +1,61 @@
-<<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        
-        <script src="" async defer></script>
-    </body>
+{% load static %}
+
+{% block styles %}
+<!-- Custom styles for this template -->
+<link rel="stylesheet" href="{% static 'nutrihub/bootstrap.css' %}"/>
+{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="http://127.0.0.1:8000/nutrihub/home"><img src = "{% static 'nutrihub/logo.png' %}" class = "img-fluid" style ="width:40px;height: 40px;float:left;"><h3>Nutrihub</h3></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/nutrihub/home/#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/nutrihub/home/#contact">Contact Us</a>
+              </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <form class="d-flex" action="http://127.0.0.1:8000/nutrihub/signout">
+                <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign Out</button>
+            </form>
+            {% else %}
+            <form class="d-flex" action="http://127.0.0.1:8000/nutrihub/signin">
+                <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign In/Sign Up</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+      <!--pizza time-->
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="#signin" data-toggle="collapse" aria-expanded = "false">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#signup" data-toggle="collapse" aria-expanded = "true">Sign Up</a>
+        </li>
+      </ul>
+      <!--this part is for adding the forms, ignore this for now-->
+      <div id="tabcontent" class="tab-content">
+          <div id="signin">
+              <p></p>
+          </div>
+          <div id="signup">
+             <p></p>
+          </div>
+      </div>
+</body>
 </html>
