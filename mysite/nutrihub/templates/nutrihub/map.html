@@ -43,13 +43,14 @@
     });
 
     function initMap(data, pos) {
+      console.log(data.results)
        const map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: {lat: pos.lat, lng: pos.lng}
        });
-       const markers = data?.map((i) => {
+       const markers = data.results?.map((i) => {
             const marker = new google.maps.Marker({
-                position: { lat: parseFloat(i.latitude), lng: parseFloat(i.longitude)},
+                position: { lat: parseFloat(i.geometry.location.lat), lng: parseFloat(i.geometry.location.lng)},
                 map: map,
             })
         });
