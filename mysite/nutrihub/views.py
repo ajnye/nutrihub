@@ -31,3 +31,6 @@ def signin(request):
 def home_page(request):
     context = {'user': request.user, 'title': 'Home'}
     return render(request, "nutrihub/home_page.html", context)
+def signin(request):
+    context = {'user': request.user, 'title': 'Signin'}
+    return render(request, "nutrihub/sign_in_up_page.html", context)
