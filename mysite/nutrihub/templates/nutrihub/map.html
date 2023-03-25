@@ -23,21 +23,38 @@
 {% load static %}
 
 <script>
-    navigator.geolocation.getCurrentPosition(initMap);
+    $(document).ready(function(){
+        $.ajax({
+            url: "{% url 'nutrihub:get_foodbanks'%}",
+            method: 'GET',
+            success: function (data) {
+                console.log(data);
+                //initMap(data);
+                navigator.geolocation.getCurrentPosition(
+                  (position) => {
+                    const pos = {
+                      lat: position.coords.latitude,
+                      lng: position.coords.longitude,
+                    };
+                    initMap(data, pos)
+                });
+            }
+      });
+    });
 
-    function initMap(data) {
+    function initMap(data, pos) {
+      console.log(data.results)
        const map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
-          center: {lat: data.coords.latitude, lng: data.coords.longitude}
+          center: {lat: pos.lat, lng: pos.lng}
        });
-
-       const markers = data?.map((i) => {
+       const markers = data.results?.map((i) => {
             const marker = new google.maps.Marker({
-                position: { lat: parseFloat(i.latitude), lng: parseFloat(i.longitude)},
+                position: { lat: parseFloat(i.geometry.location.lat), lng: parseFloat(i.geometry.location.lng)},
                 map: map,
+                title: i.name + "\n" + i.vicinity
             })
         });
-
      }
   </script>
 
