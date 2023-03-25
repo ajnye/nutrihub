@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.contrib.auth import *
-from allauth.socialaccount import *
+# from allauth.socialaccount import *
 import time
 import requests
 
