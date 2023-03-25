@@ -6,7 +6,7 @@ app_name = 'nutrihub'
 urlpatterns = [
     path('home/', views.home_page, name='home'),
     path('map/',view.map, name="map"),
-    path('get_foodbanks/', view.get_foodbanks, name='get_foodbanks')
+    path('get_foodbanks/', view.get_foodbanks, name='get_foodbanks'),
     path('signin/', views.signin, name='signin')
     # path('tutor/', include('tutor.urls')),
     # path('student/', include('student.urls')),
