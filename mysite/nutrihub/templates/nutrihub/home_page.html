@@ -27,14 +27,20 @@
                 <a class="nav-link" href="#contact">Contact Us</a>
               </li>
             </ul>
-            <form class="d-flex">
-              <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign In/Sign Up</button>
+            {% if user.is_authenticated %}
+            <form class="d-flex" action="https://127.0.0.1:8000/nutrihub/signout">
+                <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign Out</button>
             </form>
+            {% else %}
+            <form class="d-flex" action="https://127.0.0.1:8000/nutrihub/signin">
+                <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign In/Sign Up</button>
+              </form>
+            {% endif %}
           </div>
         </div>
       </nav>
     <div class="header">
-        <h1><br></br><center>Connecting Communities, Nourishing Lives</center></h1>
+        <h1 class="p-3"><center>Connecting Communities, Nourishing Lives</center></h1>
         <center><img src = "{% static 'nutrihub/coverimage.jpg' %}" class = "img-fluid" style = "width: 400px;height:400px;"></center>
         <p><center>We're so glad to see you. Please click the button below to sign up.</center></p>
         <center><button type= "button" class="btn btn-primary">Get Started</button></center>
