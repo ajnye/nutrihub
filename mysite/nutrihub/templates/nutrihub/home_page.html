@@ -13,19 +13,26 @@
 </head>
 <body>
     <nav class="navbar navbar-togglable-md navbar-light bg-light">
-        <a class="navbar-brand" href="#home"><b>Nutrihub</b></a>
+        <a class="navbar-brand" href="#home"><img src = "{% static 'nutrihub/logo.png' %}" class = "img-fluid" style ="width:40px;height: 40px;float:left;"><h2>Nutrihub</h2></a>
             <ul class="navbar-nav p-1 pt-2">
-                <li class="nav-item">
-                    <form action = "http://127.0.0.1:8000/nutrihub/home/#signin">
-                        <button class = "btn btn-secondary" type="submit">Sign In/Sign Up</button>
-                    </form>
-                </li>
+                <form action = "http://127.0.0.1:8000/nutrihub/home/#signin">
+                    <button class = "btn btn-secondary" type="submit">Sign In/Sign Up</button>
+                </form>
             </ul>
     </nav>
     <div class="header">
         <h1><br></br><center>Connecting Communities, Nourishing Lives</center></h1>
+        <center><img src = "{% static 'nutrihub/coverimage.jpg' %}" class = "img-fluid" style = "width: 400px;height:400px;"></center>
         <p><center>We're so glad to see you. Please click the button below to sign up.</center></p>
         <center><button type= "button" class="btn btn-primary">Get Started</button></center>
+    </div>
+    <div class="aboutus" id = "about">
+        <h1><br></br><br></br><center>About Us</center></h1>
+        <p><center>Nutrihub was founded on the hope that we could connect users to food banks for individual-based needs.</center></p>
+    </div>
+    <div class="contactus" id = "contact">
+        <h1><br></br><br></br><center>Contact Us</center></h1>
+        <p><center>Any questions? Contact us at the email xxxxx@xxx.com.</center></p>
     </div>
 </body>
 </html>
