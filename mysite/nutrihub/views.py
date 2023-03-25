@@ -55,10 +55,17 @@ def map(request):
     return render(request, 'nutrihub/map.html',context)
 
 # Create your views here.
+def signout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('nutrihub:home'))
+
 def signin(request):  
-    if request.POST == 'POST':  
+    print(request.POST)
+    if request.POST:
+        print('post')
         form = CustomUserCreationForm()  
-        if form.is_valid():  
+        if form.is_valid():
+            print('save')  
             form.save()  
     else:  
         form = CustomUserCreationForm()  
