@@ -9,11 +9,15 @@ from django.urls import reverse
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.contrib.auth import *
-from allauth.socialaccount import *
 import time
 import requests
-
-# Create your views here.
+from django.conf import settings
+def map(request):
+    key = settings.GOOGLE_API_KEY
+    context = {
+        'key':key,
+    }
+    return render(request, 'nutrihub/map.html',context)
 
 def home_page(request):
     return render(request, "nutrihub/home_page.html")
