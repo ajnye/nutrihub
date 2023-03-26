@@ -6,6 +6,7 @@
 + Kevin Cha
 + AJ Nye
 
-pip install geocoder
-pip install pgeocode
-pip install django python-dotenv
+# Packages needed
++ pip install geocoder
++ pip install pgeocode
++ pip install django python-dotenv
