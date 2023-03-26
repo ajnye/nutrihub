@@ -50,7 +50,7 @@ class RegisterFoodBankForm(forms.Form):
     name = forms.CharField(label='Enter your food bank name:', max_length=500)
     address = forms.CharField(label='Enter your address:', max_length=1000)
     email = forms.EmailField(label='Enter your email:', max_length=500)
-    phone_number = forms.IntegerField(label='Enter your phone number:')
+    phone_number = forms.CharField(label='Enter your phone number:')
 
 
 class SigninForm(AuthenticationForm):
