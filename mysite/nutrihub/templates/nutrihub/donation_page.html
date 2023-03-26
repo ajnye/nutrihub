@@ -13,9 +13,11 @@
 
 <body>
 
-<form>
+<form action="{%url 'nutrihub:thank_you' %}" method="POST">
+    {% csrf_token %}
 <label> Select a food bank </label>
-    <select id="target">
+    <br>
+    <select id="target" onChange="getOption()">
     <option value="">Select...
     </option>
         {% for fb in food_banks %}
@@ -23,35 +25,23 @@
             </option>
         {% endfor %}
     </select>
+    <input type="hidden" id="food_bank" name="selected_food_bank">
 
-    <div id= class="inv">
-
-    </div>
+    <br>
+    <label>Enter the amount you would like to donate: </label>
+    <input type="text" name="donation">
+    <br>
+    <button type="submit">Submit</button>
 </form>
 
-
 <script>
-            document
-                .getElementById('target')
-                .addEventListener('change', function () {
-                    'use strict';
+    function getOption(){
+        var select = document.getElementById('target');
+        var option = select.options[select.selectedIndex];
 
-                    var vis = document.querySelector('.vis'),
-                        target = document.getElementById(this.value);
-                    if (vis !== null) {
-                        vis.className = 'inv';
-                    }
-                    if (target !== null ) {
-                        target.className = 'vis';
-                        resetVals();
-                    }
-            });
-            function resetVals() {
-                $("input:radio").each(function() {
-                        $(this)[0].checked = false;
-                });
-            }
-    </script>
+        document.getElementById('food_bank').value = option.value;
+    }
+</script>
 
 </body>
 </html>

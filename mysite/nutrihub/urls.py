@@ -10,10 +10,6 @@ urlpatterns = [
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
     path('register_foodbank/', views.register_food_bank, name='register_foodbank'),
-    path('make_donation/', views.make_a_donation, name='make_donation')
-    # path('tutor/', include('tutor.urls')),
-    # path('student/', include('student.urls')),
-    # path('course/', views.tutor_search_courses, name='search'),
-    # path('detail/', views.course_detail, name='course-detail'),
-    # path('profile/', views.tutor_profile, name = 'tutor_profile')
+    path('make_donation/', views.make_a_donation, name='make_donation'),
+    path('thank_you/', views.donate, name='thank_you')
 ]
