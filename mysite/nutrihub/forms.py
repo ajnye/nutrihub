@@ -1,6 +1,8 @@
 from django import forms  
-from django.contrib.auth.forms import UserCreationForm  
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User  
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm  
 from django.core.exceptions import ValidationError  
 from django.forms.fields import EmailField  
 from django.forms.forms import Form  
@@ -23,7 +25,7 @@ class CustomUserCreationForm(UserCreationForm):
         email = self.cleaned_data['email'].lower()  
         new = User.objects.filter(email=email)  
         if new.count():  
-            raise ValidationError(" Email Already Exist")  
+            raise ValidationError("Email Already Exist")  
         return email  
   
     def clean_password2(self):  
@@ -50,3 +52,7 @@ class RegisterFoodBankForm(forms.Form):
     email = forms.EmailField(label='Enter your email:', max_length=500)
     phone_number = forms.IntegerField(label='Enter your phone number:')
 
+
+class SigninForm(AuthenticationForm):
+    username = forms.CharField(label = 'Username')
+    password = forms.CharField(label = 'Password', widget=forms.PasswordInput)

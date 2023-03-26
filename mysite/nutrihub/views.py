@@ -17,7 +17,7 @@ from django.http import JsonResponse
 import time
 import requests
 from django.contrib.auth.forms import UserCreationForm  
-from .forms import CustomUserCreationForm, RegisterFoodBankForm
+from .forms import *
 
 import geocoder
 
@@ -62,21 +62,33 @@ def signout(request):
 def signin(request):  
     print(request.POST)
     print(request.user)
+    form = None
+    signin = None
+
     if request.POST:
         print('post')
-        form = CustomUserCreationForm(data=request.POST)  
-        print(form.errors)
-        print(form.is_bound)
-        if form.is_valid():
-            print('save')  
-            form.save()  
-            
-            user = authenticate(username=request.POST['username'], password=request.POST['password1'])
-            login(request, user)
-    else:  
-        form = CustomUserCreationForm()  
-    context = {  
-        'form':form  
+        if "email" in request.POST:
+            form = CustomUserCreationForm(data=request.POST)
+            if form.is_valid():
+                print('save')  
+                form.save()  
+                user = authenticate(username=request.POST['username'], password=request.POST['password1'])
+                login(request, user)
+                return map(request)
+        else:
+            signin = SigninForm(data=request.POST)
+            if signin.is_valid():
+                user = authenticate(username=request.POST['username'], password=request.POST['password'])
+                login(request, user)
+                return map(request)
+        # print(form.errors)
+        # print(form.is_bound)
+    if form is None:
+        form = CustomUserCreationForm()
+    if signin is None:
+        signin = SigninForm()  
+    context = {
+        'form':form, 'signin':signin  
     }  
     return render(request, 'nutrihub/sign_in_up_page.html', context)  
 
