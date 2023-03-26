@@ -68,11 +68,26 @@
           center: {lat: pos.lat, lng: pos.lng}
        });
        const markers = data.results?.map((i) => {
+            const contextString = 
+            "<div>" + i.name + "</div>" +
+            "<div>" + i.vicinity + "<div>";
+            const infowindow = new google.maps.InfoWindow({
+                content: contextString,
+            });
+
             const marker = new google.maps.Marker({
                 position: { lat: parseFloat(i.geometry.location.lat), lng: parseFloat(i.geometry.location.lng)},
                 map: map,
                 title: i.name + "\n" + i.vicinity
             })
+
+            marker.addListener("click", () => {
+              infowindow.open({
+                anchor: marker,
+                map,
+              });
+            });
+
         });
      }
 
