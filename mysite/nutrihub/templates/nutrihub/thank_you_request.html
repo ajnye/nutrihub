@@ -43,9 +43,12 @@
           </div>
         </div>
       </nav>
-<form action="{%url 'nutrihub:map' %}">
-    Thank you for your request to {{ food_bank.name }}!
-    <button type="submit">Return Back to Map</button>
-</form>
+    <div class="card text-white bg-secondary mb-3 mx-auto" style="max-width: 20rem;">
+        <div class="card-header">Thank you!</div>
+        <div class="card-body mx-auto">
+            <form action="{%url 'nutrihub:map' %}">
+                <p class="card-text">Thank you for your request to {{ food_bank.name }}!</p>
+                <button class="btn-primary btn" type="submit">Return Back to Map</button>
+        </div>
 </body>
 </html>

@@ -4,6 +4,7 @@
 <!-- Custom styles for this template -->
 <link rel="stylesheet" href="{% static 'nutrihub/bootstrap.css' %}"/>
 {% endblock %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,26 +51,31 @@
           </div>
         </div>
       </nav>
-<form action="{%url 'nutrihub:thank_you' %}" method="POST">
-    {% csrf_token %}
-<label> Select a food bank </label>
-    <br>
-    <select id="target" onChange="getOption()">
-    <option value="">Select...
-    </option>
-        {% for fb in food_banks %}
-            <option value = {{fb.id}}> {{fb.name}}
-            </option>
-        {% endfor %}
-    </select>
-    <input type="hidden" id="food_bank" name="selected_food_bank">
 
-    <br>
-    <label>Enter the amount you would like to donate: </label>
-    <input type="text" name="donation">
-    <br>
-    <button type="submit">Submit</button>
-</form>
+<div class="card text-white bg-secondary mb-3 mx-auto" style="max-width: 20rem;">
+    <div class="card-header">Donate</div>
+    <div class="card-body">
+        <form action="{%url 'nutrihub:thank_you' %}" method="POST">
+            {% csrf_token %}
+        <label> Select a food bank </label>
+            <br>
+            <select id="target" onChange="getOption()">
+            <option value="">Select...
+            </option>
+                {% for fb in food_banks %}
+                    <option value = {{fb.id}}> {{fb.name}}
+                    </option>
+                {% endfor %}
+            </select>
+            <input type="hidden" id="food_bank" name="selected_food_bank">
+        
+            <br>
+            <label>Enter the amount you would like to donate: </label>
+            <input type="text" name="donation">
+            <br>
+            <button class="btn btn-success" type="submit">Submit</button>
+        </form>
+    </div>
 
 <script>
     function getOption(){
