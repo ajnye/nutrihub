@@ -14,5 +14,5 @@ class FoodBank(models.Model):
     address = models.CharField(max_length=1000)
     email = models.CharField(max_length=500)
     phone_number = models.CharField(max_length=10)
-    donation_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0)
+    donation_amount = models.FloatField(default=0)
     uses = models.IntegerField(default=0)

@@ -19,4 +19,7 @@ urlpatterns = [
     # path('course/', views.tutor_search_courses, name='search'),
     # path('detail/', views.course_detail, name='course-detail'),
     # path('profile/', views.tutor_profile, name = 'tutor_profile')
+    path('thank_you/', views.donate, name='thank_you'),
+    path('request_food_bank/', views.make_a_request, name='make_request'),
+    path('thank_you_request/', views.request_food_bank, name='thank_you_request')
 ]

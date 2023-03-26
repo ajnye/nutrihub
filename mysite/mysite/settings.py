@@ -11,18 +11,19 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
-from django.core.management.utils import get_random_secret_key
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
-
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-DEBUG = os.getenv("DEBUG", "False") == "True"
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_API_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
