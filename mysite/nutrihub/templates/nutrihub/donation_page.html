@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Make a Donation</title>
+</head>
+
+<style>
+    .inv {
+    display: none;
+    }
+</style>
+
+<body>
+
+<form>
+<label> Select a food bank </label>
+    <select id="target">
+    <option value="">Select...
+    </option>
+        {% for fb in food_banks %}
+            <option value = {{fb.id}}> {{fb.name}}
+            </option>
+        {% endfor %}
+    </select>
+
+    <div id= class="inv">
+
+    </div>
+</form>
+
+
+<script>
+            document
+                .getElementById('target')
+                .addEventListener('change', function () {
+                    'use strict';
+
+                    var vis = document.querySelector('.vis'),
+                        target = document.getElementById(this.value);
+                    if (vis !== null) {
+                        vis.className = 'inv';
+                    }
+                    if (target !== null ) {
+                        target.className = 'vis';
+                        resetVals();
+                    }
+            });
+            function resetVals() {
+                $("input:radio").each(function() {
+                        $(this)[0].checked = false;
+                });
+            }
+    </script>
+
+</body>
+</html>
