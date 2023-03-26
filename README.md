@@ -1,10 +1,10 @@
 # nutrihub
 
 # Contributors
-Dylan Crotty
-Cheryl Bai
-Kevin Cha
-AJ Nye
++ Dylan Crotty
++ Cheryl Bai
++ Kevin Cha
++ AJ Nye
 
 pip install geocoder
 pip install pgeocode
