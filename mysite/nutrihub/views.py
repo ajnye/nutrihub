@@ -17,7 +17,7 @@ from django.http import JsonResponse
 import time
 import requests
 from django.contrib.auth.forms import UserCreationForm  
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, RegisterFoodBankForm
 
 import geocoder
 
@@ -61,12 +61,18 @@ def signout(request):
 
 def signin(request):  
     print(request.POST)
+    print(request.user)
     if request.POST:
         print('post')
-        form = CustomUserCreationForm()  
+        form = CustomUserCreationForm(data=request.POST)  
+        print(form.errors)
+        print(form.is_bound)
         if form.is_valid():
             print('save')  
             form.save()  
+            
+            user = authenticate(username=request.POST['username'], password=request.POST['password1'])
+            login(request, user)
     else:  
         form = CustomUserCreationForm()  
     context = {  
@@ -75,8 +81,24 @@ def signin(request):
     return render(request, 'nutrihub/sign_in_up_page.html', context)  
 
 def home_page(request):
+    print(request.user)
     context = {'user': request.user, 'title': 'Home'}
     return render(request, "nutrihub/home_page.html", context)
 # def signin(request):
 #     context = {'user': request.user, 'title': 'Signin'}
 #     return render(request, "nutrihub/sign_in_up_page.html", context)
+
+def register_food_bank(request):
+    if request.method == 'POST':
+        if request.POST.get("save"):
+            form = RegisterFoodBankForm(request.POST)
+            if form.is_valid():
+                name = form.cleaned_data["name"]
+                address = form.cleaned_data["address"]
+                email = form.cleaned_data["email"]
+                phone_number = form.cleaned_data["phone_number"]
+                food_bank = FoodBank(name=name, address=address, email=email, phone_number=phone_number)
+                food_bank.save()
+    else:
+        form = RegisterFoodBankForm()
+    return render(request, 'nutrihub/foodbankregister.html', {'form': form})
