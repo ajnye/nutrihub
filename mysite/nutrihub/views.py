@@ -99,6 +99,7 @@ def signout(request):
     return HttpResponseRedirect(reverse('nutrihub:home'))
 
 def signin(request):  
+    focus_signup = False
     print(request.POST)
     print(request.user)
     form = None
@@ -114,6 +115,8 @@ def signin(request):
                 user = authenticate(username=request.POST['username'], password=request.POST['password1'])
                 login(request, user)
                 return map(request)
+            else:
+                focus_signup = True
         else:
             signin = SigninForm(data=request.POST)
             if signin.is_valid():
@@ -127,7 +130,7 @@ def signin(request):
     if signin is None:
         signin = SigninForm()  
     context = {
-        'form':form, 'signin':signin  
+        'form':form, 'signin':signin, 'focus_signup': focus_signup  
     }  
     return render(request, 'nutrihub/sign_in_up_page.html', context)  
 
