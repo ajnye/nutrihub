@@ -61,18 +61,38 @@
           </div>
         </div>
       </nav>
+      {% if messages %}  
+      <ul>   
+          {% for message in messages %}  
+              <li>{{ message }}</li>  
+              {% endfor %}  
+      </ul>   
+        {% endif %}  
+
       <!--pizza time-->
       <ul class="nav nav-tabs">
         <li class="nav-item">
+            {% if focus_signup %}
+            <a data-bs-toggle="tab" class="nav-link" href="#signin" role = "tab">Sign In</a>
+            {% else %}
           <a data-bs-toggle="tab" class="nav-link active" href="#signin" role = "tab">Sign In</a>
+            {% endif %}
         </li>
         <li class="nav-item">
+            {% if focus_signup %}
+            <a data-bs-toggle="tab" class="nav-link active" href="#signup" role = "tab">Sign Up</a>
+            {% else %}
           <a data-bs-toggle="tab" class="nav-link" href="#signup" role = "tab">Sign Up</a>
+            {% endif %}
         </li>
       </ul>
       <!--this part is for adding the forms, ignore this for now-->
       <div class="tab-content">
-          <div id="signin" class = "tab-pane fade active show" role = "tabpanel">
+            {% if focus_signup %}
+          <div id="signin" class = "tab-pane fade" role = "tabpanel">
+            {% else %}
+            <div id="signin" class = "tab-pane fade active show" role = "tabpanel">
+            {% endif %}
               <p>
                 <h2>Log In</h2>
                 <form method="post">
@@ -87,18 +107,14 @@
                 </form>
               </p>
           </div>
+          {% if focus_signup %}
+          <div id="signup" class = "tab-pane fade active show" role = "tabpanel">
+            {% else %}
           <div id="signup" class = "tab-pane fade" role = "tabpanel">
+            {% endif %}
              <p>
-  
                 <div class = "login">
                     <h2>Sign Up</h2>
-                    {% if messages %}  
-                        <ul>   
-                            {% for message in messages %}  
-                                <li>{{ message }}</li>  
-                                {% endfor %}  
-                        </ul>   
-                    {% endif %}  
                            
                          <form method="post" >  
                              {% csrf_token %}  

@@ -39,6 +39,7 @@
             </form>
             <form class="d-flex" action="http://127.0.0.1:8000/nutrihub/request_food_bank">
                 <button class = "btn btn-success my-1 my-sm-1" type="submit">Request</button>
+            </form>
             {% if user.is_authenticated %}
             <form class="d-flex" action="http://127.0.0.1:8000/nutrihub/signout">
                 <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign Out</button>
@@ -51,6 +52,7 @@
           </div>
         </div>
       </nav>
+      <br>
 
 <div class="card text-white bg-secondary mb-3 mx-auto" style="max-width: 20rem;">
     <div class="card-header">Donate</div>

@@ -16,7 +16,7 @@
     <title>Food Bank Registration</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg py-0 navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="http://127.0.0.1:8000/nutrihub/home"><img src = "{% static 'nutrihub/logo.png' %}" class = "img-fluid" style ="width:40px;height: 40px;float:left;"><h3>Nutrihub</h3></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,12 +43,12 @@
             {% else %}
             <form class="d-flex" action="http://127.0.0.1:8000/nutrihub/signin">
                 <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign In/Sign Up</button>
-                </form>
+              </form>
             {% endif %}
-            </div>
+          </div>
         </div>
-        </nav>
-        <br>
+      </nav>
+      <br>
     <div class="card text-white bg-secondary mb-3 mx-auto" style="max-width: 40rem;">
         <div class="card-header">Registration</div>
         <div class="card-body">

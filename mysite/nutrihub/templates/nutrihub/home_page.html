@@ -12,7 +12,7 @@
     <title>Home Page</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg py-0 navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="http://127.0.0.1:8000/nutrihub/home"><img src = "{% static 'nutrihub/logo.png' %}" class = "img-fluid" style ="width:40px;height: 40px;float:left;"><h3>Nutrihub</h3></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,10 +21,10 @@
           <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link" href="#about">About</a>
+                <a class="nav-link" href="http://127.0.0.1:8000/nutrihub/home/#about">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#contact">Contact Us</a>
+                <a class="nav-link" href="http://127.0.0.1:8000/nutrihub/home/#contact">Contact Us</a>
               </li>
             </ul>
             <form class="d-flex" action="http://127.0.0.1:8000/nutrihub/make_donation">
@@ -32,12 +32,13 @@
             </form>
             <form class="d-flex" action="http://127.0.0.1:8000/nutrihub/request_food_bank">
                 <button class = "btn btn-success my-1 my-sm-1" type="submit">Request</button>
+            </form>
             {% if user.is_authenticated %}
-            <form class="d-flex" action="../signout">
+            <form class="d-flex" action="http://127.0.0.1:8000/nutrihub/signout">
                 <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign Out</button>
             </form>
             {% else %}
-            <form class="d-flex" action="../signin">
+            <form class="d-flex" action="http://127.0.0.1:8000/nutrihub/signin">
                 <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign In/Sign Up</button>
               </form>
             {% endif %}
@@ -48,7 +49,16 @@
         <h1 class="p-3"><center>Connecting Communities, Nourishing Lives</center></h1>
         <center><img src = "{% static 'nutrihub/coverimage.jpg' %}" class = "rounded img-fluid" style = "width: 300px;height:300px;"></center>
         <p><center>We're so glad to see you. Please click the button below to sign up.</center></p>
-        <center><button type= "button" class="btn btn-primary">Get Started</button></center>
+        {% if user.is_authenticated %}
+        <form action="http://127.0.0.1:8000/nutrihub/map">
+            <center><button type="submit" class="btn btn-primary">Get Started</button></center>
+        </form>
+        {% else %}
+        <form action="http://127.0.0.1:8000/nutrihub/signin">
+            <center><button type="submit" class="btn btn-primary">Get Started</button></center>
+        </form>
+        {% endif %}
+        
     </div>
     <div class="about-us" id = "about">
         <h1><br></br><br></br><center>About Us</center></h1>
