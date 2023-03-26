@@ -17,7 +17,7 @@ from django.http import JsonResponse
 import time
 import requests
 from django.contrib.auth.forms import UserCreationForm  
-from .forms import CustomUserCreationForm
+from .forms import *
 
 import geocoder
 
@@ -55,21 +55,73 @@ def map(request):
     return render(request, 'nutrihub/map.html',context)
 
 # Create your views here.
+def signout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('nutrihub:home'))
+
 def signin(request):  
-    if request.POST == 'POST':  
-        form = CustomUserCreationForm()  
-        if form.is_valid():  
-            form.save()  
-    else:  
-        form = CustomUserCreationForm()  
-    context = {  
-        'form':form  
+    print(request.POST)
+    print(request.user)
+    form = None
+    signin = None
+
+    if request.POST:
+        print('post')
+        if "email" in request.POST:
+            form = CustomUserCreationForm(data=request.POST)
+            if form.is_valid():
+                print('save')  
+                form.save()  
+                user = authenticate(username=request.POST['username'], password=request.POST['password1'])
+                login(request, user)
+                return map(request)
+        else:
+            signin = SigninForm(data=request.POST)
+            if signin.is_valid():
+                user = authenticate(username=request.POST['username'], password=request.POST['password'])
+                login(request, user)
+                return map(request)
+        # print(form.errors)
+        # print(form.is_bound)
+    if form is None:
+        form = CustomUserCreationForm()
+    if signin is None:
+        signin = SigninForm()  
+    context = {
+        'form':form, 'signin':signin  
     }  
     return render(request, 'nutrihub/sign_in_up_page.html', context)  
 
 def home_page(request):
+    print(request.user)
     context = {'user': request.user, 'title': 'Home'}
     return render(request, "nutrihub/home_page.html", context)
 # def signin(request):
 #     context = {'user': request.user, 'title': 'Signin'}
 #     return render(request, "nutrihub/sign_in_up_page.html", context)
+
+def register_food_bank(request):
+    if request.method == 'POST':
+        if request.POST.get("save"):
+            form = RegisterFoodBankForm(request.POST)
+            if form.is_valid():
+                name = form.cleaned_data["name"]
+                address = form.cleaned_data["address"]
+                email = form.cleaned_data["email"]
+                phone_number = form.cleaned_data["phone_number"]
+                food_bank = FoodBank(name=name, address=address, email=email, phone_number=phone_number)
+                food_bank.save()
+    else:
+        form = RegisterFoodBankForm()
+    return render(request, 'nutrihub/foodbankregister.html', {'form': form})
+
+def make_a_donation(request):
+    food_banks = FoodBank.objects.all()
+    return render(request, 'nutrihub/donation_page.html', {'food_banks':food_banks})
+def donate(request):
+    food_bank_id  = request.POST.get('food_bank')
+    donated_amount = request.POST.get('donation')
+    food_bank = FoodBank.objects.get(id=food_bank_id)
+    food_bank.donation_amount += donated_amount
+    food_bank.save()
+    return render(request, 'nutrihub/thank_you.html', {'food_bank': food_bank})

@@ -27,8 +27,11 @@
                 <a class="nav-link" href="#contact">Contact Us</a>
               </li>
             </ul>
+            <form class="d-flex p-1" action="http://127.0.0.1:8000/nutrihub/request">
+                <button class = "btn btn-success" type="submit">Request</button>
+            </form>
             {% if user.is_authenticated %}
-            <form class="d-flex" action="127.0.0.1:8000/nutrihub/signout/">
+            <form class="d-flex" action="../signout">
                 <button class = "btn btn-secondary my-2 my-sm-2" type="submit">Sign Out</button>
             </form>
             {% else %}

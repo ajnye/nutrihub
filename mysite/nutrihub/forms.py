@@ -1,9 +1,12 @@
 from django import forms  
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User  
-from django.contrib.auth.forms import UserCreationForm  
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm  
 from django.core.exceptions import ValidationError  
 from django.forms.fields import EmailField  
 from django.forms.forms import Form  
+from .models import *
   
 class CustomUserCreationForm(UserCreationForm):  
     username = forms.CharField(label='Username', min_length=5, max_length=150)  
@@ -22,7 +25,7 @@ class CustomUserCreationForm(UserCreationForm):
         email = self.cleaned_data['email'].lower()  
         new = User.objects.filter(email=email)  
         if new.count():  
-            raise ValidationError(" Email Already Exist")  
+            raise ValidationError("Email Already Exist")  
         return email  
   
     def clean_password2(self):  
@@ -39,4 +42,17 @@ class CustomUserCreationForm(UserCreationForm):
             self.cleaned_data['email'],  
             self.cleaned_data['password1']  
         )  
+        user.save()
         return user  
+
+
+class RegisterFoodBankForm(forms.Form):
+    name = forms.CharField(label='Enter your food bank name:', max_length=500)
+    address = forms.CharField(label='Enter your address:', max_length=1000)
+    email = forms.EmailField(label='Enter your email:', max_length=500)
+    phone_number = forms.IntegerField(label='Enter your phone number:')
+
+
+class SigninForm(AuthenticationForm):
+    username = forms.CharField(label = 'Username')
+    password = forms.CharField(label = 'Password', widget=forms.PasswordInput)
