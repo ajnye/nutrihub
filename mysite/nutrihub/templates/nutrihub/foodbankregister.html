@@ -1,3 +1,15 @@
+{% load static %}
+
+{% block styles %}
+<!-- Custom styles for this template -->
+<link rel="stylesheet" href="{% static 'nutrihub/bootstrap.css' %}"/>
+{% endblock %}
+
+<style>
+    .as_p {
+        padding-top: 10px;
+    }
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +17,16 @@
     <title>Food Bank Registration</title>
 </head>
 <body>
-    <form method="POST" >
-    {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-    <button type = "submit", name = "save", value = "POST">Register</button>
-    </form>
+    <div class="card text-white bg-secondary mb-3 mx-auto" style="max-width: 40rem;">
+        <div class="card-header">Registration</div>
+        <div class="card-body">
+            <form method="POST" >
+                {% csrf_token %}
+                    <table>
+                        {{ form.as_p }}
+                    </table>
+                <button class="btn btn-success" type = "submit", name = "save", value = "POST">Register</button>
+                </form>
+        </div>
 </body>
 </html>
