@@ -129,3 +129,12 @@ def donate(request):
     food_bank.donation_amount = current_donations
     food_bank.save()
     return render(request, 'nutrihub/thank_you.html', {'food_bank': food_bank})
+
+def make_a_request(request):
+    food_banks = FoodBank.objects.all()
+    return render(request, 'nutrihub/request.html', {'food_banks': food_banks})
+
+def request_food_bank(request):
+    food_bank_id = request.POST.get('selected_food_bank')
+    food_bank = FoodBank.objects.get(id=food_bank_id)
+    return render(request, 'nutrihub/thank_you_request.html', {'food_bank': food_bank})

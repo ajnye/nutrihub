@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Make a Request</title>
+</head>
+
+<body>
+
+<form action="{%url 'nutrihub:thank_you_request' %}" method="POST">
+    {% csrf_token %}
+<label> Select a food bank </label>
+    <br>
+    <select id="target" onChange="getOption()">
+    <option value="">Select...
+    </option>
+        {% for fb in food_banks %}
+            <option value = {{fb.id}}> {{fb.name}}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="hidden" id="food_bank" name="selected_food_bank">
+
+    <br>
+    <label>What are you requesting? </label>
+    <textarea type="text" name="food_bank_request">
+        Please enter your request.
+    </textarea>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    function getOption(){
+        var select = document.getElementById('target');
+        var option = select.options[select.selectedIndex];
+
+        document.getElementById('food_bank').value = option.value;
+    }
+</script>
+
+</body>
+</html>

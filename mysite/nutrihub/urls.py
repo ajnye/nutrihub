@@ -11,5 +11,7 @@ urlpatterns = [
     path('signout/', views.signout, name='signout'),
     path('register_foodbank/', views.register_food_bank, name='register_foodbank'),
     path('make_donation/', views.make_a_donation, name='make_donation'),
-    path('thank_you/', views.donate, name='thank_you')
+    path('thank_you/', views.donate, name='thank_you'),
+    path('request_food_bank/', views.make_a_request, name='make_request'),
+    path('thank_you_request/', views.request_food_bank, name='thank_you_request')
 ]
