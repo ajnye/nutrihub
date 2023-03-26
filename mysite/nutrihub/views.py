@@ -20,39 +20,77 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm
 
 import geocoder
+import pgeocode
+import json
 
-# def get_locations():
-#     key = settings.GOOGLE_API_KEY
+def get_website(request, place_id):
+    url = f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=website&key={settings.GOOGLE_API_KEY}'
+    payload={}
+    headers={}
+    additionalinfo = requests.request("GET", url, headers = headers, data = payload)
+    return HttpResponse(additionalinfo.text, content_type="application/json")
 
-#     g = geocoder.ip('me').latlng
-#     url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={g[0]}%2C{g[1]}&radius=1500&keyword=food+bank&key={key}'
-#     payload={}
-#     headers = {}
-
-#     response = requests.request("GET", url, headers=headers, data=payload)
-
-#     return response
-
-def get_foodbanks(request):
+def get_foodbanks(request, zipcode):
     key = settings.GOOGLE_API_KEY
 
     g = geocoder.ip('me').latlng
+    if(zipcode != 0):
+        nomi = pgeocode.Nominatim('us')
+        q = nomi.query_postal_code(str(zipcode))
+        g = [q.latitude, q.longitude]
+    elif(g is None):
+        g = [38.0336, -78.5080]
     url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={g[0]}%2C{g[1]}&radius=1500&keyword=food+bank&key={key}'
     payload={}
     headers = {}
 
     response = requests.request("GET", url, headers=headers, data=payload)
-    # print(response.text)
     return HttpResponse(response.text, content_type="application/json")
+
+def get_foodbanks_list(zipcode):
+    key = settings.GOOGLE_API_KEY
+
+    g = geocoder.ip('me').latlng
+    if(zipcode != 0):
+        nomi = pgeocode.Nominatim('us')
+        q = nomi.query_postal_code(str(zipcode))
+        g = [q.latitude, q.longitude]
+        print(g)
+    elif(g is None):
+        g = [38.0336, -78.5080]
+    url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={g[0]}%2C{g[1]}&radius=1500&keyword=food+bank&key={key}'
+    payload={}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    response_json = json.loads(response.text)
+    foodbank_list = []
+    for foodbank in response_json["results"]:
+        foodbank_list.append({"name": foodbank["name"], "vicinity": foodbank["vicinity"], "place_id": foodbank["place_id"]})    
+    return foodbank_list
 
 def map(request):
     key = settings.GOOGLE_API_KEY
-
+    fb_dict = get_foodbanks_list(0)
     context = {
         'key':key,
-
+        'fblist': fb_dict,
+        'zipcode': 0
     }
-    return render(request, 'nutrihub/map.html',context)
+    return render(request, 'nutrihub/map.html', context)
+
+def map2(request, zipcode):
+    # if ('search-input' in request.GET):
+    #     zipcode = request['search-input']
+    
+    key = settings.GOOGLE_API_KEY
+    fb_dict = get_foodbanks_list(zipcode)
+    context = {
+        'key':key,
+        'fblist': fb_dict,
+        'zipcode': zipcode
+    }
+    return render(request, 'nutrihub/map.html', context)
 
 # Create your views here.
 def signin(request):  
