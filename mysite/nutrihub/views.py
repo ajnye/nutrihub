@@ -17,6 +17,7 @@ from django.http import JsonResponse
 import time
 import requests
 from django.contrib.auth.forms import UserCreationForm  
+from django.core.mail import send_mail
 from .forms import *
 
 import geocoder
@@ -136,5 +137,7 @@ def make_a_request(request):
 
 def request_food_bank(request):
     food_bank_id = request.POST.get('selected_food_bank')
+    writtenemail = request.POST.get('food_bank_request')
     food_bank = FoodBank.objects.get(id=food_bank_id)
+    send_mail('Food Request', writtenemail + '\nEmail: ' + request.user.email, 'nutrihubber@gmail.com',[food_bank.email])
     return render(request, 'nutrihub/thank_you_request.html', {'food_bank': food_bank})
