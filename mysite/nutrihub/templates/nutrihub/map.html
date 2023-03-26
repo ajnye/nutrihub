@@ -20,16 +20,35 @@
 
 {% extends 'nutrihub/base.html' %}
 {% block content %}
-{% load static %}
 
 <script>
     $(document).ready(function(){
-        $.ajax({
-            url: "{% url 'nutrihub:get_foodbanks'%}",
+        console.log("{{zipcode}}")
+        var url = new URL("http://" + window.location.host + "/nutrihub/get_foodbanks/0")
+        if ("{{zipcode}}" != 0){
+            url = new URL("http://" + window.location.host + "/nutrihub/get_foodbanks/" + "{{zipcode}}")
+            console.log("https://maps.googleapis.com/maps/api/geocode/json?address="+"{{zipcode}}"+'&key='+"{{key}}")
+            fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+"{{zipcode}}"+'&key='+"{{key}}")
+              .then(response => response.json())
+              .then(data1 => {
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: function (data) { 
+                      const pos = {
+                        lat: data1.results[0].geometry.location.lat,
+                        lng: data1.results[0].geometry.location.lng
+                      };
+                      initMap(data, pos)
+                    }
+                });
+              })
+        }
+        else{
+          $.ajax({
+            url: url,
             method: 'GET',
             success: function (data) {
-                console.log(data);
-                //initMap(data);
                 navigator.geolocation.getCurrentPosition(
                   (position) => {
                     const pos = {
@@ -39,13 +58,13 @@
                     initMap(data, pos)
                 });
             }
-      });
+          });
+        }
     });
 
     function initMap(data, pos) {
-      console.log(data.results)
        const map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
+          zoom: 12,
           center: {lat: pos.lat, lng: pos.lng}
        });
        const markers = data.results?.map((i) => {
@@ -56,21 +75,51 @@
             })
         });
      }
+
+     function get_website(place_id){
+        console.log(place_id)
+        const url = new URL("http://" + window.location.host + "/nutrihub/get_website/" + place_id)
+          $.ajax({url: url, 
+          method: 'GET',
+          success: function (data) {
+              const doc = document.getElementById("website+" + place_id)
+              doc.innerHTML = data.result.website
+              doc.setAttribute('href', data.result.website)
+              document.getElementById(place_id).setAttribute('disabled')
+            }
+        });
+     }
   </script>
 
 
-<div class="pageholder">
-
-    <div class="linkholder">
-        <div class="mapholder">
-            <div id="map"></div>
-            <script
-            src="https://maps.googleapis.com/maps/api/js?key={{key}}&callback=initMap&v=weekly"
-            defer
-            ></script>
-        </div>
-    </div>
+<div>
+  <div class="mapholder">
+    <div id="map"></div>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key={{key}}&callback=initMap&v=weekly"
+    defer
+    ></script>
+  </div>
 </div>
+
+<div>
+{% for fb in fblist %}
+  <div class = "foodbank_list">
+    <button id = "{{fb.place_id}}" onclick = "get_website('{{fb.place_id}}')">
+      <p>{{fb.name}}</p>
+      <p>{{fb.vicinity}}</p>
+      <a id = "website+{{fb.place_id}}"></a>
+    </button>
+  </div>
+{% endfor %}
+</div>
+
+<!-- <div>
+  <form action="{% url 'nutrihub:map' %}" id="search-zip" method="GET">
+    {% csrf_token %}
+    <input type="text" id="search-input">
+  </form>
+</div> -->
 
 {% endblock content %}
 </body>
